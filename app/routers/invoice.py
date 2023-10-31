@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from app.database import get_db
 from app import models
+from datetime import datetime
 
 router = APIRouter()
 
@@ -93,3 +94,23 @@ def delete_item(id: int = Form(...), db: Session = Depends(get_db)):
     invoice_item.delete(synchronize_session=False)
     db.commit()
     return {"message": "Invoice item delete"}
+
+
+@router.post("/paid")
+def paid_invoice(id: int = Form(...), db: Session = Depends(get_db)):
+    invoice = db.query(models.Invoice).filter(models.Invoice.id == id).first()
+    invoice.is_paid = True
+    invoice.paid_at = datetime.now()
+    db.commit()
+    return {"message": "This invoice is paid"}
+
+
+@router.post("/new_invoice/create")
+def create_new_invoice_only(title: str = Form(...), db: Session = Depends(get_db)):
+    print(title)
+    _new_invoice = models.Invoice(title=title)
+    db.add(_new_invoice)
+    db.commit()
+    db.refresh(_new_invoice)
+
+    return {"message": "Created invoice"}

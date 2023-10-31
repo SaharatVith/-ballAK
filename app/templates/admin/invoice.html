@@ -1,7 +1,72 @@
 {% extends 'base.html' %} {% block content %}
 <h2>Invoice</h2>
 <div class="card">
-  <h5 class="card-header">Featured</h5>
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="mb-0">Featured</h5>
+    <div>
+      <!-- Move the button to the right within the card header -->
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleIModal"
+      >
+        Create new
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleIModal"
+        tabindex="-1"
+        aria-labelledby="exampleIModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleIModalLabel">
+                Create a new invoice
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form action="/admin/invoice/new_invoice/create" method="post">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >Title</label
+                  >
+                  <input
+                    name="title"
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                  />
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-dark">Save changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card-body">
     <table class="table">
       <thead>

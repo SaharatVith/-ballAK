@@ -56,13 +56,12 @@ def room_detail(request: Request, db: Session = Depends(get_db)):
 async def submit_form(
     room_id: str = Form(...),
     name: str = Form(...),
-    id_number: str = Form(...),
     phone: str = Form(...),
     message: str = Form(...),
     db: Session = Depends(get_db),
 ):
     new_contract = models.Contract(
-        room_id=room_id, name=name, id_number=id_number, phone=phone, message=message
+        room_id=room_id, name=name, phone=phone, message=message
     )
 
     db.add(new_contract)

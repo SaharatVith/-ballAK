@@ -17,7 +17,7 @@
             <tbody>
                 {% for item in invoice_items %}
                 <tr>
-                    <th scope="row">{{ item.id }}</th>
+                    <th scope="row"></th>
                     <td>{{ item.description }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.price }}</td>
@@ -128,6 +128,36 @@
 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModalx">
   Add
 </button>
+<!-- Button trigger modal -->
+{% if not invoice.is_paid %}
+<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#paidModal">
+    Paid
+</button>
+
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="paidModal" tabindex="-1" aria-labelledby="paidModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="paidModalLabel">Change status to paid</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/admin/invoice/paid" method="post">
+
+      <div class="modal-body">
+        <h3>Are you sure you want change this invoice to be paid?</h3>
+        <input type="number" name="id" id="" hidden value="{{invoice.id}}">
+      </div> 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Yes</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Modal -->

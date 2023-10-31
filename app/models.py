@@ -26,6 +26,7 @@ class Room(Base):
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
+    meters = relationship("Meter", back_populates="room")
 
 
 class Contract(Base):
@@ -33,7 +34,6 @@ class Contract(Base):
     id = Column(Integer, primary_key=True)
     room_id = Column(String, nullable=False)
     name = Column(String, nullable=False)
-    id_number = Column(String, nullable=False)
     phone = Column(String, nullable=False)
     message = Column(Text, nullable=True)
 
@@ -72,3 +72,14 @@ class Invoice(Base):
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"))
 
     items = relationship("InvoiceItem", back_populates="invoice")
+
+
+class Meter(Base):
+    __tablename__ = "meters"
+    id = Column(Integer, primary_key=True)
+    room_id = Column(Integer, ForeignKey("rooms.id"), nullable=False)
+    meter_type = Column(String, nullable=False)
+    meter_value = Column(Float, nullable=False, default=0)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"))
+
+    room = relationship("Room", back_populates="meters")
