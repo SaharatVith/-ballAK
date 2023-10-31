@@ -42,6 +42,24 @@ def get_invoice(id: str, request: Request, db: Session = Depends(get_db)):
     )
 
 
+@router.post("/create_item")
+def create_new_invoice_item(
+    invoice_id: int = Form(...),
+    description: str = Form(...),
+    quantity: int = Form(...),
+    price: float = Form(...),
+    db: Session = Depends(get_db),
+):
+    invoice_item = models.InvoiceItem(
+        description=description, quantity=quantity, price=price, invoice_id=invoice_id
+    )
+    db.add(invoice_item)
+    db.commit()
+    db.refresh(invoice_item)
+
+    return {"message": "created invoice item"}
+
+
 class UpdateInvoiceItem(BaseModel):
     description: str
     quantity: int

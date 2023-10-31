@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 <h3>Invoice {{ invoice.id }}</h3>
 <div class="card">
     <div class="card-body">
@@ -62,7 +63,7 @@
                                             aria-describedby="emailHelp" value="{{item.quantity}}" name="quantity" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Price</label>
+                                        <label for "exampleInputEmail1" class="form-label">Price</label>
                                         <input type="number" class="form-control" id="exampleInputEmail1"
                                             aria-describedby="emailHelp" value="{{item.price}}" name="price" />
                                     </div>
@@ -115,8 +116,53 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-body">
-        <strong>Total Price: {{ total_price }}</strong>
+<div class="card-body d-flex justify-content-between">
+        <div>
+            <strong>Total Price: {{ total_price }}</strong>
+        </div>
+        <div>
+            <!-- Add button on the right side -->
+            <!-- Button trigger modal -->
+<!-- </form> -->
+
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModalx">
+  Add
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalx" tabindex="-1" aria-labelledby="exampleModalxLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalxLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/invoice/create_item" method="post">
+    <input type="text" class="form-control" id="exampleInputEmail1" hidden aria-describedby="emailHelp" name="invoice_id" value="{{invoice.id}}">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Description</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="description">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Quantity</label>
+    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="quantity">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Price</label>
+    <input type="numbe" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="price">
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+        </div>
     </div>
 </div>
 {% endblock %}
