@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Room insight {{ room.room_id}}</h1>
+<div class="card">
+    <div class="card-header">
+        <h4 class="text-black-50">Current Infomation</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{room.cover}}" alt="..." class="img-fluid" />
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+                <h5 class="mt-2">
+                    <b>The Room {{room.room_id}}</b>
+                </h5>
+                <p>{{room.description}}</p>
+
+                <h6>
+                    <b>Price </b>
+                    <span class="badge bg-light text-dark ">{{'%0.2f' | format(room.price|float)}} Bath</span>
+                </h6>
+                <h6>
+                    <b>Room type</b>
+                    <span class="badge bg-light text-dark ">{{room.room_type}}</span>
+                </h6>
+                <h6>
+                    <b>Status</b>
+                    {% if room.is_available %}
+                    <span class="badge bg-light text-success ">Available</span>
+                    {% else %}
+                    <span class="badge bg-light text-danger ">Unavailable</span>
+                    {% endif %}
+                </h6>
+                <h6>
+                    <b>Created at </b>
+                    <span class="badge bg-light text-dark ">{{room.created_at.strftime('%Y-%m-%d') }}</span>
+                </h6>
+                <hr />
+                <h5 class="mt-2">
+                    <b>Current Customer</b>
+                </h5>
+                <h6>
+                    <b>Name</b>
+                    <span class="badge bg-light text-dark">Siwi Qiwi</span>
+                </h6>
+                <!-- Modal -->
+                <div class="mt-auto d-grid gap-2">
+                    <button class="btn btn-dark text-light" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Edit Infomation
+                    </button>
+                </div>
+
+                <!-- Button trigger modal -->
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                    Edit Infomation
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/admin/room/update" method="post">
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Room id</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="room_id"
+                                            value="{{room.room_id}}" aria-describedby="emailHelp" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Cover Image Link</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="cover"
+                                            value="{{room.cover}}" aria-describedby="emailHelp" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">description</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                            name="description" value="{{room.description}}"
+                                            aria-describedby="emailHelp" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">room_type</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="room_type"
+                                            value="{{room.room_type}}" aria-describedby="emailHelp" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">price</label>
+                                        <input type="number" class="form-control" id="exampleInputEmail1" name="price"
+                                            value="{{room.price}}" aria-describedby="emailHelp" />
+                                    </div>
+                                    <div class="mb-3 form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                            name="is_available" {% if room.is_available %}checked{% endif %}>
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Available</label>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-dark text-light">
+                                    Save changes
+                                </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Modal -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

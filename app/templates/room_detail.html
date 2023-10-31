@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card mt-5 mb-5">
+  <div class="card-header">
+    <h5>Room detail</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{{room.cover}}" alt="..." class="img-fluid" />
+      </div>
+      <div class="col-md-6 d-flex flex-column">
+        <h5 class="mt-2">
+          <b>The Room {{room.room_id}}</b>
+        </h5>
+        <p>{{room.description}}</p>
+
+        <h6>
+          <b>Price &nbsp; </b>
+          <span class="badge bg-light text-dark"
+            >{{'%0.2f' | format(room.price|float)}} Bath</span
+          >
+        </h6>
+        <h6>
+          <b>Room type</b>
+          <span class="badge bg-light text-dark">{{room.room_type}}</span>
+        </h6>
+        <h6>
+          <b>Status </b>
+          {% if room.is_available %}
+          <span class="badge bg-light text-success mb-5">Available</span>
+          {% else %}
+          <span class="badge bg-light text-danger mb-5">Unavailable</span>
+          {% endif %}
+        </h6>
+        <div class="mt-auto d-grid gap-2">
+          {% if room.is_available %}
+          <a href="/contract" class="btn btn-dark text-light" type="button">
+            Make a contract
+          </a>
+          {% else %}
+          <a href="#" class="btn btn-dark text-light disabled" type="button">
+            Make a contract
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

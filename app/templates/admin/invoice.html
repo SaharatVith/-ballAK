@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Invoice</h2>
+<div class="card">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Status</th>
+          <th scope="col">Created at</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invoice in invoices %}
+        <tr>
+          <th scope="row">{{invoice.id}}</th>
+          <td>
+            <a href="/admin/invoice/{{invoice.id}}"> {{invoice.title}} </a>
+          </td>
+          <td>
+            {% if invoice.is_paid %}
+            <span class="badge rounded-pill text-light bg-success">Paid</span>
+            {% else %}
+            <span class="badge rounded-pill text-light bg-danger">Unpaid</span>
+            {% endif %}
+          </td>
+          <td>{{invoice.created_at.strftime('%Y-%m-%d')}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}
