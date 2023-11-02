@@ -48,6 +48,7 @@ def room_update(
     db: Session = Depends(get_db),
 ):
     room_query = db.query(models.Room).filter(models.Room.room_id == room_id)
+    # update data
     room_query.update(
         UpdateRoom(
             room_id=room_id,
@@ -59,7 +60,7 @@ def room_update(
         ).model_dump(),
         synchronize_session=False,
     )
-    db.commit()
+    db.commit()  # commit database
     return {"message": "updated"}
 
 

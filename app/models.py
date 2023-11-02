@@ -78,8 +78,8 @@ class Meter(Base):
     __tablename__ = "meters"
     id = Column(Integer, primary_key=True)
     room_id = Column(Integer, ForeignKey("rooms.id"), nullable=False)
-    meter_type = Column(String, nullable=False)
-    meter_value = Column(Float, nullable=False, default=0)
+    water_meter_value = Column(Float, nullable=False, default=0)
+    electric_meter_value = Column(Float, nullable=False, default=0)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"))
 
     room = relationship("Room", back_populates="meters")

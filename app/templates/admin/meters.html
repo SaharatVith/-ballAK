@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Meter</h1>
+<div class="card">
+  <div class="card-header">Featured</div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Room</th>
+          <th scope="col">Water meter</th>
+          <th scope="col">Electric meter</th>
+          <!-- <th scope="col">Month</th>
+          <th scope="col">Year</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in rooms %}
+        <tr>
+          <th scope="row">
+            <a
+              href="/admin/meter/room/{{item.id}}"
+              class="text-decoration-none"
+            >
+              {{item.room_id}}
+            </a>
+          </th>
+          <td>
+            <span class="badge rounded-pill bg-success">
+              {{item.water_meter}}
+            </span>
+          </td>
+          <td>
+            <span class="badge rounded-pill bg-success">
+              {{item.electric_meter}}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

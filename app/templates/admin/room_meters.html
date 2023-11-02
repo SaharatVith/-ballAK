@@ -1,0 +1,107 @@
+{% extends 'base.html'%} {% block content %}
+<h3>The electric and water meters</h3>
+<div class="card">
+  <div class="card-header">
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-dark"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      New record
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/admin/meter/create_new_record" method="post">
+              <div class="mb-3">
+                <input
+                  type="number"
+                  name="the_room_id"
+                  value="{{the_room_id}}"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Water meter</label
+                >
+                <input
+                  type="number"
+                  name="water_meter"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Electric meter</label
+                >
+                <input
+                  type="number"
+                  name="electric_meter"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                />
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Datetime</th>
+          <th scope="col">Water meters</th>
+          <th scope="col">Electric meters</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in all_meters %}
+        <tr>
+          <th scope="row">{{m.created_at.strftime('%Y-%m-%d')}}</th>
+          <td>{{m.water_meter_value}}</td>
+          <td>{{m.electric_meter_value}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

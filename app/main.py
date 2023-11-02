@@ -8,7 +8,8 @@ from app import models
 from app.routers import router
 from pydantic import BaseModel
 
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 
@@ -28,7 +29,9 @@ app.add_middleware(
 
 @app.get("/")
 def root(request: Request, db: Session = Depends(get_db)):
-    rooms = db.query(models.Room).all()
+    rooms = db.query(models.Room).all()  # create sql execution
+    # rooms[0].
+
     return templates.TemplateResponse(
         "index.html", {"request": request, "rooms": rooms}
     )
@@ -50,6 +53,9 @@ def room_detail(request: Request, db: Session = Depends(get_db)):
             "request": request,
         },
     )
+
+
+# new.value - old.value
 
 
 @app.post("/contract/create")
