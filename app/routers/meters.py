@@ -42,12 +42,40 @@ def get_all_rooms(request: Request, db: Session = Depends(get_db)):
             .limit(2)  # Limit to the latest 2 records
             .all()
         )
+        if len(latest_meter_data) == 0:
+            rooms_2.append(
+                RoomMeter(id=i.id, room_id=i.room_id, water_meter=0, electric_meter=0)
+            )
+        elif len(latest_meter_data) == 1:
+            rooms_2.append(
+                RoomMeter(
+                    id=i.id,
+                    room_id=i.room_id,
+                    water_meter=(latest_meter_data[0].water_meter_value),
+                    electric_meter=latest_meter_data[0].electric_meter_value,
+                )
+            )
+        else:
+            rooms_2.append(
+                RoomMeter(
+                    id=i.id,
+                    room_id=i.room_id,
+                    water_meter=(
+                        latest_meter_data[0].water_meter_value
+                        - latest_meter_data[1].water_meter_value
+                    ),
+                    electric_meter=(
+                        latest_meter_data[0].electric_meter_value
+                        - latest_meter_data[1].electric_meter_value
+                    ),
+                )
+            )
 
     return templates.TemplateResponse(
         "meters.html",
         {
             "request": request,
-            "rooms": rooms,
+            "rooms": rooms_2,
         },
     )
 
